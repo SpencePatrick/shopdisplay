@@ -1,0 +1,21 @@
+thead > td {
+  font-weight: bold;
+}
+
+/* .tableheader {
+  font-size: 20px;
+
+} */
+
+.yellow {
+  background-color: Yellow;
+}
+
+.green {
+  background-color: Green;
+}
+
+.red {
+  background-color: Red;
+
+}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<table class = "table table-bordered table-striped">
+  <thead>
+    <tr class = "tableheader">
+      {% for data in values.0 %}
+        {% if forloop.counter != 1 %}
+          {% if forloop.counter != 3 %}
+            <td>{{ data }}</td>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in values %}
+      {% if forloop.counter != 1 %}
+        <tr>
+          {% for data in row %}
+            {% if forloop.counter == 1 %}
+              {% if data == "Green" %}
+                <td class = "green">
+              {% elif data == "Yellow" %}
+                <td class = "yellow">
+              {% else %}
+                <td class = "red">
+              {% endif %}
+            {% else %}
+              {% if forloop.counter != 3 %}
+                {% if forloop.counter == 2 %}
+                  {{ data }}</td>
+                {% else %}
+                  <td>{{ data }}</td>
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+
+<table class = "table table-bordered table-striped">
+  <thead>
+    <tr>
+      PILOTS
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in pilotvalues %}
+    <tr>
+      {% for data in row %}
+        <td>{{ data }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
