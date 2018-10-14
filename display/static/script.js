@@ -27,6 +27,10 @@ function changecolor() {
     var strdate = new Date(str[1], str[0]);
     var strdateendofmonth = new Date(strdate.getFullYear(), strdate.getMonth(), 0);
     // console.log(endofmonth);
+    if (currentmonthlastday.getMonth() == 0 || currentmonthlastday.getMonth() == 1) {
+
+       
+    }
     if (strdateendofmonth.getFullYear() == currentmonthlastday.getFullYear() && strdateendofmonth.getMonth() - currentmonthlastday.getMonth() <= 1) {
       gracedatetd.item(i).style.backgroundColor = "yellow";
     } else if (strdateendofmonth.getFullYear() == currentmonthlastday.getFullYear() && strdateendofmonth.getMonth() - currentmonthlastday.getMonth() > 1) {
