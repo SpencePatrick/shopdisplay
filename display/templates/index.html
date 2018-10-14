@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<table class = "table table-bordered table-striped">
+<table class = "table table-bordered table-striped table-hover table-condensed">
   <thead>
     <tr class = "tableheader">
       {% for data in values.0 %}
@@ -43,19 +43,33 @@
   </tbody>
 </table>
 
-<table class = "table table-bordered table-striped">
+<table class = "table table-bordered table-striped table-hover table-condensed">
   <thead>
-    <tr>
-      PILOTS
+    <tr class = "tableheader">
+      {% for row in pilotvalues.0 %}
+        <td>{{ row }}</td>
+      {% endfor %}
     </tr>
   </thead>
   <tbody>
     {% for row in pilotvalues %}
-    <tr>
-      {% for data in row %}
-        <td>{{ data }}</td>
-      {% endfor %}
-    </tr>
+      {% if forloop.counter != 1 %}
+          <tr>
+          {% for data in row %}
+            {% if forloop.counter == 5 %}
+              <td class = "pilotdatetd">{{ data }}</td>
+            {% elif forloop.counter == 7 %}
+              <td class = "gracepilotdatetd">{{ data }}</td>
+            {% elif forloop.counter == 8 %}
+              <td class = "gracepilotdatetd">{{ data }}</td>
+            {% elif forloop.counter == 9 %}
+              <td class = "gracepilotdatetd">{{ data }}</td>
+            {% else %}
+              <td>{{ data }}</td>
+            {% endif %}
+          {% endfor %}
+        </tr>
+      {% endif %}
     {% endfor %}
   </tbody>
 </table>
