@@ -2,10 +2,15 @@ thead > td {
   font-weight: bold;
 }
 
-/* .tableheader {
-  font-size: 20px;
+table {
+  height: 50%;
+  font-size: 12px;
+}
 
-} */
+.tableheader {
+  font-size: 14px;
+  font-weight: bold;
+}
 
 .yellow {
   background-color: Yellow;
