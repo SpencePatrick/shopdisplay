@@ -13,8 +13,10 @@ function changecolor() {
     // console.log(endofmonth);
     if (strdateendofmonth.getFullYear() == currentmonthlastday.getFullYear() && strdateendofmonth.getMonth() == currentmonthlastday.getMonth()) {
       datetd.item(i).style.backgroundColor = "yellow";
+      datetd.item(i).style.color = "black";
     } else if (strdateendofmonth.getFullYear() == currentmonthlastday.getFullYear() && strdateendofmonth.getMonth() > currentmonthlastday.getMonth()) {
       datetd.item(i).style.backgroundColor = "red";
+      datetd.item(i).style.color = "black";
     }
   }
 
@@ -29,12 +31,14 @@ function changecolor() {
     // console.log(endofmonth);
     if (currentmonthlastday.getMonth() == 0 || currentmonthlastday.getMonth() == 1) {
 
-       
+
     }
     if (strdateendofmonth.getFullYear() == currentmonthlastday.getFullYear() && strdateendofmonth.getMonth() - currentmonthlastday.getMonth() <= 1) {
       gracedatetd.item(i).style.backgroundColor = "yellow";
+      gracedatetd.item(i).style.color = "black";
     } else if (strdateendofmonth.getFullYear() == currentmonthlastday.getFullYear() && strdateendofmonth.getMonth() - currentmonthlastday.getMonth() > 1) {
-        gracedatetd.item(i).style.backgroundColor = "red";
+      gracedatetd.item(i).style.backgroundColor = "red";
+      gracedatetd.item(i).style.color = "black";
     }
     // console.log(gracedatetd.item(i).innerHTML);
   }
