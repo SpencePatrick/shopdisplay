@@ -1,10 +1,16 @@
 thead > td {
   font-weight: bold;
+
+}
+
+td {
+  height: 10px;
 }
 
 table {
   height: 50%;
-  font-size: 12px;
+  font-size: 10px;
+  width: 100%;
 }
 
 .tableheader {
