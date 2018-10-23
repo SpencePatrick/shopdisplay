@@ -42,7 +42,7 @@
     {% endfor %}
   </tbody>
 </table>
-
+<!-- <br> -->
 <table class = "table table-bordered table-striped table-hover table-sm table-dark" style ="margin-top: 0px;">
   <thead>
     <tr class = "tableheader">
@@ -63,6 +63,8 @@
             {% elif forloop.counter == 8 %}
               <td class = "gracepilotdatetd">{{ data }}</td>
             {% elif forloop.counter == 9 %}
+              <td class = "gracepilotdatetd">{{ data }}</td>
+            {% elif forloop.counter == 15 %}
               <td class = "gracepilotdatetd">{{ data }}</td>
             {% else %}
               <td>{{ data }}</td>

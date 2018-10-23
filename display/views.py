@@ -27,12 +27,12 @@ def index(request):
     result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
                                                 range=RANGE_NAME).execute()
     values = result.get('values', [])
-    
+
     SPREADSHEET_ID = '1bw7MY3EK2GifM1h_wtYZ4VJhpHllQ6HGpCbRxPiejxs'
-    RANGE_NAME = 'Pilot Readiness!A1:N12'
+    RANGE_NAME = 'Pilot Readiness!A1:P12'
     result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
                                                 range=RANGE_NAME).execute()
     pilotvalues = result.get('values', [])
-
+    
     context = {'pilotvalues': pilotvalues, 'values': values}
     return render(request, 'index.html', context)

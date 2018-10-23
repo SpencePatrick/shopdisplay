@@ -7,8 +7,9 @@ thead > td {
 
 table {
   height: 200px;
-  font-size: 9px;
-  /* font-weight: bold; */
+  font-size: 11px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
