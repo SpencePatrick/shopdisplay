@@ -6,10 +6,13 @@ thead > td {
 
 .clock {
   height: 120px;
+  padding-left: 250px;
 }
 
 #clock {
   font-size: 60px;
+  color: white;
+
 }
 
 table {
