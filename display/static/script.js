@@ -60,7 +60,7 @@ function displaytime() {
   m = checkTime(m);
   s = checkTime(s);
   document.getElementById('clock').innerHTML =
-  month + " " + d + ", " + y + ",    " + h + ":" + m + ":" + s;
+  month + " " + d + ", " + y + " || " + h + ":" + m + ":" + s;
   var t = setTimeout(displaytime, 500);
 }
 function checkTime(i) {
