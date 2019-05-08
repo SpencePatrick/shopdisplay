@@ -2,82 +2,139 @@
 {% load static %}
 
 {% block content %}
-
-<table class = "table table-bordered table-striped table-hover table-sm table-dark h-50 m-0">
-  <thead>
-    <tr class = "tableheader">
-      {% for row in pilotvalues.0 %}
-        <td>{{ row }}</td>
-      {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for row in pilotvalues %}
-      {% if forloop.counter != 1 %}
-          <tr>
-          {% for data in row %}
-            {% if forloop.counter == 5 %}
-              <td class = "pilotdatetd">{{ data }}</td>
-            {% elif forloop.counter == 7 %}
-              <td class = "gracepilotdatetd">{{ data }}</td>
-            {% elif forloop.counter == 8 %}
-              <td class = "gracepilotdatetd">{{ data }}</td>
-            {% elif forloop.counter == 9 %}
-              <td class = "gracepilotdatetd">{{ data }}</td>
-            {% elif forloop.counter == 15 %}
-              <td class = "gracepilotdatetd">{{ data }}</td>
-            {% else %}
-              <td>{{ data }}</td>
-            {% endif %}
-          {% endfor %}
-        </tr>
-      {% endif %}
-    {% endfor %}
-  </tbody>
-</table>
-<div class = "clock m-0 pt-2">
-  <div class = "mx-auto" id = "clock"></div>
-</div>
-<table class = "table table-bordered table-striped table-hover table-sm table-dark m-0">
-  <thead>
-    <tr class = "tableheader">
-      {% for data in values.0 %}
+<div class = "row">
+  <table class = "table table-bordered table-striped table-hover table-sm table-dark">
+    <thead>
+      <tr class = "tableheader">
+        {% for row in pilotvalues.0 %}
+          <td>{{ row }}</td>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in pilotvalues %}
         {% if forloop.counter != 1 %}
-          {% if forloop.counter != 3 %}
-            <td>{{ data }}</td>
-          {% endif %}
+            <tr>
+            {% for data in row %}
+              {% if forloop.counter == 5 %}
+                <td class = "pilotdatetd">{{ data }}</td>
+              {% elif forloop.counter == 7 %}
+                <td class = "gracepilotdatetd">{{ data }}</td>
+              {% elif forloop.counter == 8 %}
+                <td class = "gracepilotdatetd">{{ data }}</td>
+              {% elif forloop.counter == 9 %}
+                <td class = "gracepilotdatetd">{{ data }}</td>
+              {% elif forloop.counter == 15 %}
+                <td class = "gracepilotdatetd">{{ data }}</td>
+              {% else %}
+                <td>{{ data }}</td>
+              {% endif %}
+            {% endfor %}
+          </tr>
         {% endif %}
       {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for row in values %}
-      {% if forloop.counter != 1 %}
-        <tr>
-          {% for data in row %}
-            {% if forloop.counter == 1 %}
-              {% if data == "Green" %}
-                <td class = "green">
-              {% elif data == "Yellow" %}
-                <td class = "yellow">
-              {% else %}
-                <td class = "red">
-              {% endif %}
-            {% else %}
-              {% if forloop.counter != 3 %}
-                {% if forloop.counter == 2 %}
-                  {{ data }}</td>
+    </tbody>
+  </table>
+</div>
+<div class = "row clock mb-0 pt-0">
+  <div class="ml-0" >
+    <span id="trackerlabel">{{ e }}Flight Tracker:</span>&nbsp&nbsp&nbsp
+    <select id='flightfollower' name="flightfollowers">
+      <option value="Kyle Greene">Kyle Green</option>
+      <option value="William Foote">William Foote</option>
+      <option value="Cindy Fritz">Cindy Fritz</option>
+      <option value="Spence Patrick">Spence Patrick</option>
+      <option value="Spence Patrick">Jamie Boesiger</option>
+      <option value="Spence Patrick">Trevor Davidson</option>
+    </select>
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  </div>&nbsp&nbsp&nbsp&nbsp&nbsp
+  <div  id = "clock"></div>
+</div>
+<div class = "row fixed-bottom pb-0">
+  <table class = "table table-bordered table-striped table-hover table-sm table-dark p-0">
+    <thead>
+      <tr class = "tableheader">
+        {% for data in values.0 %}
+          {% if forloop.counter != 1 %}
+            {% if forloop.counter != 3 %}
+              <td>{{ data }}</td>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in values %}
+        {% if row.1 == 'N114BH' or row.1 == 'N6993N' or row.1 == 'N732DW'%}
+        <!-- These are my phase planes  -->
+          <tr>
+            {% for data in row %}
+              {% if forloop.counter == 1 %}
+                {% if data == "Green" %}
+                  <td class = "green">
+                {% elif data == "Yellow" %}
+                  <td class = "yellow">
                 {% else %}
-                  <td>{{ data }}</td>
+                  <td class = "red">
+                {% endif %}
+              {% else %}
+                {% if forloop.counter != 3 %}
+                  {% if forloop.counter == 2 %}
+                  <!-- This is aircraft name -->
+                    {{ data }}</td>
+
+                  {% elif forloop.counter == 14 %}
+                    <td>
+                      {{ data}}<br>
+                      {% if row.1 == 'N114BH' %}
+                        {{ values.6.13 }}
+                      {% elif row.1 == 'N6993N' %}
+                        {{ values.10.13 }}
+                      {% elif row.1 == 'N732DW' %}
+                        {{ values.8.13 }}
+                      {% endif %}
+                    </td>
+                  {% else %}
+                  <!--  This is everything else -->
+                    <td><span class = "align-middle">{{ data }}</span></td>
+                  {% endif %}
                 {% endif %}
               {% endif %}
-            {% endif %}
-          {% endfor %}
-        </tr>
-      {% endif %}
+            {% endfor %}
+          </tr>
+        {% elif row.1 != '4BH' and row.1 != '2DW' and row.1 != '93N' and row.1 != ''%}
+        <!-- These are my NOT phase planes -->
+          {% if forloop.counter != 1 %}
+            <tr>
+            {% for data in row %}
+              {% if forloop.counter == 1 %}
+                {% if data == "Green" %}
+                  <td class = "green">
+                {% elif data == "Yellow" %}
+                  <td class = "yellow">
+                {% else %}
+                  <td class = "red">
+                {% endif %}
+              {% else %}
+                {% if forloop.counter != 3 %}
+                  {% if forloop.counter == 2 %}
+                  <!-- This is aircraft name -->
+                    {{ data }}</td>
+
+                  {% else %}
+                  <!--  This is everything else -->
+                    <td>{{ data }}</td>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+            </tr>
+          {% endif %}
+        {% endif %}
     {% endfor %}
-  </tbody>
-</table>
-<!-- <br> -->
+    </tbody>
+  </table>
+</div>
 
 {% endblock %}

@@ -15,6 +15,11 @@ function changecolor() {
     if (strdateendofmonth.getFullYear() == currentmonthlastday.getFullYear() && strdateendofmonth.getMonth() == currentmonthlastday.getMonth()) {
       datetd.item(i).style.backgroundColor = "yellow";
       datetd.item(i).style.color = "black";
+      console.log('hi');
+    } else if (strdateendofmonth.getFullYear() == currentmonthlastday.getFullYear() && strdateendofmonth.getMonth() == currentmonthlastday.getMonth() + 1) {
+
+      datetd.item(i).style.backgroundColor = "yellow";
+      datetd.item(i).style.color = "black";
     } else if (strdateendofmonth.getFullYear() == currentmonthlastday.getFullYear() && strdateendofmonth.getMonth() < currentmonthlastday.getMonth()) {
       datetd.item(i).style.backgroundColor = "red";
       datetd.item(i).style.color = "black";
@@ -60,7 +65,7 @@ function displaytime() {
   m = checkTime(m);
   s = checkTime(s);
   document.getElementById('clock').innerHTML =
-  month + " " + d + ", " + y + " || " + h + ":" + m + ":" + s;
+  month + " " + d + ", " + y + " | " + h + ":" + m + ":" + s;
   var t = setTimeout(displaytime, 500);
 }
 function checkTime(i) {

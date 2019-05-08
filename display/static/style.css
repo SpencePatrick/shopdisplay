@@ -1,3 +1,8 @@
+body {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
 
 thead > td {
   font-weight: bold;
@@ -6,13 +11,22 @@ thead > td {
 
 .clock {
   height: 120px;
-  padding-left: 250px;
+  padding-left: 30px;
 }
 
 #clock {
-  font-size: 60px;
+  font-size: 40px;
   color: white;
+}
+#flightfollower {
+  background: #747880;
+  font-size: 40px;
+  color: white;
+}
 
+#trackerlabel {
+  font-size: 40px;
+  color: white;
 }
 
 table {
@@ -24,10 +38,11 @@ table {
   border-spacing: 0;
   border-collapse: collapse;
   margin: auto;
+  margin-left: 14px;
 }
 
 .tableheader {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: bold;
 }
 

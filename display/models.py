@@ -18,7 +18,7 @@ class Plane(models.Model):
     phasefour = models.CharField(max_length=100)
     aircraftstatus = models.CharField(max_length=100)
     discrepancies = models.CharField(max_length=100)
-
+    
 
 
 class Pilot(models.Model):

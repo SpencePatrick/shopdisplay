@@ -4,13 +4,14 @@ from .models import Plane, Pilot
 from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
+import datetime
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
 
 # The ID and range of a sample spreadsheet.
 SAMPLE_SPREADSHEET_ID = '1bw7MY3EK2GifM1h_wtYZ4VJhpHllQ6HGpCbRxPiejxs'
-SAMPLE_RANGE_NAME = 'Airplane Readiness!A1:P9'
+SAMPLE_RANGE_NAME = 'Airplane Readiness!A1:P12'
 # Create your views here.
 
 def index(request):
@@ -24,14 +25,45 @@ def index(request):
 
         # Call the Sheets API
         SPREADSHEET_ID = '1bw7MY3EK2GifM1h_wtYZ4VJhpHllQ6HGpCbRxPiejxs'
-        RANGE_NAME = 'Airplane Readiness!A1:P9'
-        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
+        RANGE_NAME = 'Airplane Readiness!A1:P12'
+        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME, valueRenderOption='FORMATTED_VALUE', dateTimeRenderOption='FORMATTED_STRING').execute()
+
         values = result.get('values', [])
+        print('values: ', values)
         planes = Plane.objects.all()
         if planes.exists():
+
             print('plane exists')
+            index = 0
+            number = ''
             for value in values:
-                plane = Plane.objects.get(nnumber=value[1])
+
+                if value[1] == 'N6993N':
+                    number = '93N'
+                elif value[1] == "N114BH":
+                    number = "4BH"
+                elif value[1] == 'N732DW':
+                    number = "2DW"
+                print(number)
+                if len(value[1]) > 3:
+
+                    plane = Plane.objects.get(nnumber=value[1])
+                    plane.aircraftstatus = value[14]
+                    plane.discrepancies =value[15]
+                    if value[14] == "LOADING...":
+                        value[14] = plane.aircraftstatus
+                    if value[0] == "#ERROR!":
+                        value[14] = plane.aircraftstatus
+                else:
+
+                    plane = Plane.objects.get(nnumber=number)
+                    plane.aircraftstatus = ''
+                    plane.discrepancies =''
+                    
+                if value[0] == "#ERROR!":
+                    value[0] = plane.color
+                if value[0] == "LOADING...":
+                    value[0] = plane.color
                 plane.color=value[0]
                 plane.lasttach=value[2]
                 plane.currenttach=value[3]
@@ -45,35 +77,70 @@ def index(request):
                 plane.phasetwo = value[11]
                 plane.phasethree = value[12]
                 plane.phasefour = value[13]
-                plane.aircraftstatus = value[14]
-                plane.discrepancies =value[15]
+                print('stubborn')
                 plane.save()
+                index = index + 1
         else:
             print('doesnt exist')
+            index = 0
+            number = ''
             for value in values:
+                print('hereeee')
+                print(value)
 
-                plane = Plane(
-                    color=value[0],
-                    nnumber=value[1],
-                    lasttach=value[2],
-                    currenttach=value[3],
-                    lastflight =value[4],
-                    recordsreview = value[5],
-                    annualdue = value[6],
-                    fiftyhourdue = value[7],
-                    hundredhourdue = value[8],
-                    transponderdue = value[9],
-                    phaseone = value[10],
-                    phasetwo = value[11],
-                    phasethree = value[12],
-                    phasefour = value[13],
-                    aircraftstatus = value[14],
-                    discrepancies =value[15]
-                )
-                plane.save()
+                if value[1] == 'N6993N':
+                    number = '93N'
+                elif value[1] == "N114BH":
+                    number = "4BH"
+                elif value[1] == 'N732DW':
+                    number = "2DW"
+                print(number)
+                if value[0] != '':
+                    plane = Plane(
+                        color=value[0],
+                        nnumber=value[1],
+                        lasttach=value[2],
+                        currenttach=value[3],
+                        lastflight =value[4],
+                        recordsreview = value[5],
+                        annualdue = value[6],
+                        fiftyhourdue = value[7],
+                        hundredhourdue = value[8],
+                        transponderdue = value[9],
+                        phaseone = value[10],
+                        phasetwo = value[11],
+                        phasethree = value[12],
+                        phasefour = value[13],
+                        aircraftstatus = value[14],
+                        discrepancies =value[15]
+                    )
+                    plane.save()
+                else:
+
+                    plane = Plane(
+                        color=value[0],
+                        nnumber=number,
+                        lasttach=value[2],
+                        currenttach=value[3],
+                        lastflight =value[4],
+                        recordsreview = value[5],
+                        annualdue = value[6],
+                        fiftyhourdue = value[7],
+                        hundredhourdue = value[8],
+                        transponderdue = value[9],
+                        phaseone = value[10],
+                        phasetwo = value[11],
+                        phasethree = value[12],
+                        phasefour = value[13],
+                        aircraftstatus ='',
+                        discrepancies =''
+                    )
+                    print(plane)
+                    plane.save()
+                index = index + 1
         SPREADSHEET_ID = '1bw7MY3EK2GifM1h_wtYZ4VJhpHllQ6HGpCbRxPiejxs'
         RANGE_NAME = 'Pilot Readiness!A1:P12'
-        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
+        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME, dateTimeRenderOption='FORMATTED_STRING').execute()
         pilotvalues = result.get('values', [])
         pilots = Pilot.objects.all()
         if pilots.exists():
@@ -118,10 +185,10 @@ def index(request):
                 )
 
                 pilot.save()
-        
+        print('here we are')
         context = {'pilotvalues': pilotvalues, 'values': values}
         return render(request, 'index.html', context)
-    except:
+    except Exception as e:
         pilotvalues = Pilot.objects.all().values()
         planevalues = Plane.objects.all().values()
         planes = []
@@ -167,5 +234,5 @@ def index(request):
             ]
             pilots.append(pilot)
         print('an exception occurred')
-        context = {'pilotvalues': pilots, 'values': planes}
+        context = {'pilotvalues': pilots, 'values': planes, 'error': e}
         return render(request, 'index.html', context)
