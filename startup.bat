@@ -1,3 +1,3 @@
 cd C:\Users\SP Ops\Desktop\Shop Display\shopdisplay
-git pull origin master
-python manage.py runserver
+start cmd /k CALL shopdisplay1.bat
+CALL shopdisplay2.bat

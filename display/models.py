@@ -18,7 +18,9 @@ class Plane(models.Model):
     phasefour = models.CharField(max_length=100)
     aircraftstatus = models.CharField(max_length=100)
     discrepancies = models.CharField(max_length=100)
-    
+    def __str__(self):
+        return str(self.nnumber)
+
 
 
 class Pilot(models.Model):
@@ -37,3 +39,5 @@ class Pilot(models.Model):
     daycurrency = models.CharField(max_length=100)
     nightcurrency = models.CharField(max_length=100)
     checkairman = models.CharField(max_length=100)
+    def __str__(self):
+        return str(self.name) + ", " + str(self.title)

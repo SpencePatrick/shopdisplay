@@ -29,24 +29,21 @@ def index(request):
         result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME, valueRenderOption='FORMATTED_VALUE', dateTimeRenderOption='FORMATTED_STRING').execute()
 
         values = result.get('values', [])
-        print('values: ', values)
-        planes = Plane.objects.all()
-        if planes.exists():
 
+        planes = Plane.objects.all()
+        # planes is the local database cache. If it exists then I need to overwrite the cache. the data is written to db.sqlite3
+        if planes.exists():
             print('plane exists')
             index = 0
             number = ''
             for value in values:
-
                 if value[1] == 'N6993N':
                     number = '93N'
                 elif value[1] == "N114BH":
                     number = "4BH"
                 elif value[1] == 'N732DW':
                     number = "2DW"
-                print(number)
                 if len(value[1]) > 3:
-
                     plane = Plane.objects.get(nnumber=value[1])
                     plane.aircraftstatus = value[14]
                     plane.discrepancies =value[15]
@@ -55,11 +52,9 @@ def index(request):
                     if value[0] == "#ERROR!":
                         value[14] = plane.aircraftstatus
                 else:
-
                     plane = Plane.objects.get(nnumber=number)
                     plane.aircraftstatus = ''
                     plane.discrepancies =''
-                    
                 if value[0] == "#ERROR!":
                     value[0] = plane.color
                 if value[0] == "LOADING...":
@@ -77,17 +72,14 @@ def index(request):
                 plane.phasetwo = value[11]
                 plane.phasethree = value[12]
                 plane.phasefour = value[13]
-                print('stubborn')
                 plane.save()
                 index = index + 1
+            print('Planes cache has been updated')
         else:
-            print('doesnt exist')
+            # If the planes cache does not exist,
             index = 0
             number = ''
             for value in values:
-                print('hereeee')
-                print(value)
-
                 if value[1] == 'N6993N':
                     number = '93N'
                 elif value[1] == "N114BH":
@@ -139,7 +131,7 @@ def index(request):
                     plane.save()
                 index = index + 1
         SPREADSHEET_ID = '1bw7MY3EK2GifM1h_wtYZ4VJhpHllQ6HGpCbRxPiejxs'
-        RANGE_NAME = 'Pilot Readiness!A1:P12'
+        RANGE_NAME = 'Pilot Readiness!A1:P14'
         result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME, dateTimeRenderOption='FORMATTED_STRING').execute()
         pilotvalues = result.get('values', [])
         pilots = Pilot.objects.all()
@@ -234,5 +226,6 @@ def index(request):
             ]
             pilots.append(pilot)
         print('an exception occurred')
+        print(e)
         context = {'pilotvalues': pilots, 'values': planes, 'error': e}
         return render(request, 'index.html', context)

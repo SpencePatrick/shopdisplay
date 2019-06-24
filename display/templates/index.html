@@ -38,9 +38,9 @@
 </div>
 <div class = "row clock mb-0 pt-0">
   <div class="ml-0" >
-    <span id="trackerlabel">{{ e }}Flight Tracker:</span>&nbsp&nbsp&nbsp
+    <span id="trackerlabel">Flight Tracker:</span>&nbsp&nbsp&nbsp
     <select id='flightfollower' name="flightfollowers">
-      <option value="Kyle Greene">Kyle Green</option>
+      <option value="Kyle Green">Kyle Green</option>
       <option value="William Foote">William Foote</option>
       <option value="Cindy Fritz">Cindy Fritz</option>
       <option value="Spence Patrick">Spence Patrick</option>
@@ -51,6 +51,7 @@
   </div>&nbsp&nbsp&nbsp&nbsp&nbsp
   <div  id = "clock"></div>
 </div>
+
 <div class = "row fixed-bottom pb-0">
   <table class = "table table-bordered table-striped table-hover table-sm table-dark p-0">
     <thead>
@@ -124,7 +125,17 @@
 
                   {% else %}
                   <!--  This is everything else -->
-                    <td>{{ data }}</td>
+                    {% if forloop.counter == 6 or forloop.counter == 7 or forloop.counter == 10 %}
+                      <td class = "datealert" data-id = "{{row.1}}">{{ data }}</td>
+                    {% elif forloop.counter == 8 or forloop.counter == 9 %}
+                      <td class = "tachalert" data-id = "{{row.1}}">{{ data }}</td>
+                    {% elif forloop.counter == 4 %}
+                      <td class = "tachtime" id = "tachtime{{row.1}}">{{ data }}</td>
+                    {% elif forloop.counter == 5 %}
+                      <td class = "lastflightdate" id = "lastflight{{row.1}}">{{ data }}</td>
+                    {% else %}
+                      <td>{{data}}</td>
+                    {% endif %}
                   {% endif %}
                 {% endif %}
               {% endif %}
@@ -136,5 +147,19 @@
     </tbody>
   </table>
 </div>
-
+<!-- <div class = "row fixed-bottom pb-0 pt-0 mx-auto" style="width: 35%; height: 17px">
+  <table class = "table table-dark p-0 m-0 table-sm">
+    <tbody>
+      <tr>
+        <td style = "background-color: yellow"></td>
+        <td> Maintenance due within 1 month or 10 hours</td>
+        <td style = "background-color: red"></td>
+        <td>Maintenance overdue</td>
+        <td style = "background-color: green"></td>
+        <td>Airplane is in service</td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->
+{{ e }}
 {% endblock %}
