@@ -87,7 +87,8 @@
 
                   {% elif forloop.counter == 14 %}
                     <td>
-                      {{ data}}<br>
+                      <span class = "tachalert" data-id="{{ row.1 }}">{{ data }}</span><br>
+                      <span class = "datealert" data-id = "{{ row.1 }}" data-phase = "true">
                       {% if row.1 == 'N114BH' %}
                         {{ values.6.13 }}
                       {% elif row.1 == 'N6993N' %}
@@ -95,10 +96,23 @@
                       {% elif row.1 == 'N732DW' %}
                         {{ values.8.13 }}
                       {% endif %}
+                      </span>
                     </td>
                   {% else %}
                   <!--  This is everything else -->
-                    <td><span class = "align-middle">{{ data }}</span></td>
+
+                    {% if forloop.counter == 6 or forloop.counter == 10 %}
+                      <td class = "datealert" data-id="{{row.1}}"><span class = "align-middle">{{ data }}</span></td>
+                    {% elif forloop.counter == 11 or forloop.counter == 12 or forloop.counter == 13 %}
+                      <td class = "tachalert" data-id="{{row.1}}"><span class = "align-middle">{{ data }}</span></td>
+                    {% elif forloop.counter == 14 %}
+                      <td><span class = "align-middle">{{ data }}</span></td>
+                    {% elif forloop.counter == 4 %}
+                      <td class = "tachtime" id = "tachtime{{row.1}}">{{ data }}</td>
+                    {% else %}
+                      <td><span class = "align-middle">{{ data }}</span></td>
+                    {% endif %}
+                    <!-- <td><span class = "align-middle">{{ data }}</span></td> -->
                   {% endif %}
                 {% endif %}
               {% endif %}
@@ -147,19 +161,19 @@
     </tbody>
   </table>
 </div>
-<!-- <div class = "row fixed-bottom pb-0 pt-0 mx-auto" style="width: 35%; height: 17px">
+<div class = "row fixed-bottom pb-0 pt-0 mx-auto" style="width: 35%; height: 17px">
   <table class = "table table-dark p-0 m-0 table-sm">
     <tbody>
       <tr>
         <td style = "background-color: yellow"></td>
-        <td> Maintenance due within 1 month or 10 hours</td>
+        <td class = "align-text-top"> Maintenance due within 1 month or 10 hours</td>
         <td style = "background-color: red"></td>
-        <td>Maintenance overdue</td>
+        <td class = "align-text-top">Out of Service/Overdue</td>
         <td style = "background-color: green"></td>
-        <td>Airplane is in service</td>
+        <td class = "align-text-top pt-0 mt-0">Airplane is in service</td>
       </tr>
     </tbody>
   </table>
-</div> -->
+</div>
 {{ e }}
 {% endblock %}

@@ -2,24 +2,46 @@ $(document).ready(function() {
   var datealert = $('.datealert');
   datealert.each(function(index){
     var today = new Date();
-    var compareyear = "20"+$(this).text().split('/')[1];
-    var comparemonth;
-    if ($(this).text().split('/')[0].length < 2) {
-      if ($(this).text().split('/')[0] == '9') {
-        comparemonth = "10";
-      } else {
-        comparemonth = "0" + (parseInt($(this).text().split('/')[0]) + 1);
-      }
+    if ($(this).data('phase') == true) {
+      var compareyear = $.trim($(this).text().split('/')[2]);
+
     } else {
-      if(parseInt($(this).text().split('/')[0]) == '12'){
-        comparemonth = parseInt($(this).text().split('/')[0]);
+      var compareyear = "20"+$.trim($(this).text().split('/')[1]);
+
+    }
+    var comparemonth;
+    var getmonth = $.trim($(this).text().split('/')[0])
+
+    if ($(this).data('id') == 'N732DW' && $(this).data('phase') == true) {
+      console.log('this text: ' + getmonth);
+      console.log('length: ' +getmonth.length);
+    }
+    if (getmonth.length < 2) {
+      if (getmonth == '9') {
+        comparemonth = "10";
 
       } else {
-        comparemonth = parseInt($(this).text().split('/')[0]) + 1;
+        comparemonth = "0" + (parseInt(getmonth) + 1);
+          }
+    } else {
+      if(parseInt(getmonth) == '12'){
+        comparemonth = parseInt(getmonth);
 
-      }
+
+
+      } else {
+        comparemonth = parseInt(getmonth) + 1;
+          }
     }
     var comparedate = new Date(compareyear+"-"+comparemonth);
+
+    if ($(this).data('id') == 'N732DW') {
+      console.log(compareyear+"-"+comparemonth);
+      console.log($(this).data('id') + "compare month: " + typeof comparemonth);
+      console.log('compare year: ' + typeof compareyear);
+      console.log($(this).data('id') + " comparedate: " + comparedate);
+
+    }
 
     if (today < comparedate) {
       if (today.getYear() == comparedate.getYear()){
@@ -34,10 +56,12 @@ $(document).ready(function() {
   });
   var tachalert = $('.tachalert');
   tachalert.each(function(index){
+    if ($(this).text().search(',') != -1) {
+      var replace = $(this).text().replace(',', '');
+      $(this).text(replace);
+    }
     var duetime = parseFloat($(this).text());
-    // console.log(duetime);
     var tachtime = parseFloat($('#tachtime'+$(this).data('id')).text());
-    // console.log(tachtime);
     if (duetime >= tachtime) {
       if (tachtime + 10.0 >= duetime) {
         $(this).css('background-color', 'yellow');
@@ -46,7 +70,9 @@ $(document).ready(function() {
     } else {
       $(this).css('background-color', 'red');
     }
+    console.log(tachtime);
   });
+
 
 });
 

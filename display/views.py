@@ -131,7 +131,7 @@ def index(request):
                     plane.save()
                 index = index + 1
         SPREADSHEET_ID = '1bw7MY3EK2GifM1h_wtYZ4VJhpHllQ6HGpCbRxPiejxs'
-        RANGE_NAME = 'Pilot Readiness!A1:P14'
+        RANGE_NAME = 'Pilot Readiness!A1:P15'
         result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME, dateTimeRenderOption='FORMATTED_STRING').execute()
         pilotvalues = result.get('values', [])
         pilots = Pilot.objects.all()
