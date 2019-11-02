@@ -11,7 +11,7 @@ SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
 
 # The ID and range of a sample spreadsheet.
 SAMPLE_SPREADSHEET_ID = '1bw7MY3EK2GifM1h_wtYZ4VJhpHllQ6HGpCbRxPiejxs'
-SAMPLE_RANGE_NAME = 'Airplane Readiness!A1:P12'
+SAMPLE_RANGE_NAME = 'Airplane Readiness!A1:P25'
 # Create your views here.
 
 def index(request):
@@ -25,17 +25,20 @@ def index(request):
 
         # Call the Sheets API
         SPREADSHEET_ID = '1bw7MY3EK2GifM1h_wtYZ4VJhpHllQ6HGpCbRxPiejxs'
-        RANGE_NAME = 'Airplane Readiness!A1:P12'
+        RANGE_NAME = 'Airplane Readiness!A2:P25'
         result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME, valueRenderOption='FORMATTED_VALUE', dateTimeRenderOption='FORMATTED_STRING').execute()
 
         values = result.get('values', [])
-
+        for value in values:
+            print(value)
+            print()
         planes = Plane.objects.all()
         # planes is the local database cache. If it exists then I need to overwrite the cache. the data is written to db.sqlite3
         if planes.exists():
             print('plane exists')
             index = 0
             number = ''
+
             for value in values:
                 if value[1] == 'N6993N':
                     number = '93N'
@@ -131,14 +134,16 @@ def index(request):
                     plane.save()
                 index = index + 1
         SPREADSHEET_ID = '1bw7MY3EK2GifM1h_wtYZ4VJhpHllQ6HGpCbRxPiejxs'
-        RANGE_NAME = 'Pilot Readiness!A1:P15'
+        RANGE_NAME = 'Pilot Readiness!A2:P25'
         result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME, dateTimeRenderOption='FORMATTED_STRING').execute()
         pilotvalues = result.get('values', [])
         pilots = Pilot.objects.all()
         if pilots.exists():
             print('pilot exists')
             for value in pilotvalues:
-                pilot = Pilot.objects.get(name=value[0])
+
+                pilot = Pilot.objects.get(id=value[15])
+                pilot.name = value[0]
                 pilot.title=value[1]
                 pilot.cert=value[2]
                 pilot.certnumber=value[3]

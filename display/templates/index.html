@@ -6,32 +6,48 @@
   <table class = "table table-bordered table-striped table-hover table-sm table-dark">
     <thead>
       <tr class = "tableheader">
-        {% for row in pilotvalues.0 %}
-          <td>{{ row }}</td>
-        {% endfor %}
+
+          <td>Pilots</td>
+          <td>Title</td>
+          <td>Cert</td>
+          <td>Cert #</td>
+          <td>Medical Due</td>
+          <td>Medcal Class</td>
+          <td>FAA SE Due</td>
+          <td>FAA ME Due</td>
+          <td>FAA Inst Due</td>
+          <td></td>
+          <td>135 Ops Approved</td>
+          <td>135 AC Approved</td>
+          <td>90 Day Currency</td>
+          <td>Night Currency</td>
+          <td>Check Airman Due</td>
+
       </tr>
     </thead>
     <tbody>
       {% for row in pilotvalues %}
-        {% if forloop.counter != 1 %}
-            <tr>
-            {% for data in row %}
-              {% if forloop.counter == 5 %}
-                <td class = "pilotdatetd">{{ data }}</td>
-              {% elif forloop.counter == 7 %}
-                <td class = "gracepilotdatetd">{{ data }}</td>
-              {% elif forloop.counter == 8 %}
-                <td class = "gracepilotdatetd">{{ data }}</td>
-              {% elif forloop.counter == 9 %}
-                <td class = "gracepilotdatetd">{{ data }}</td>
-              {% elif forloop.counter == 15 %}
-                <td class = "gracepilotdatetd">{{ data }}</td>
-              {% else %}
+
+        <tr>
+          {% for data in row %}
+            {% if forloop.counter == 5 %}
+              <td class = "pilotdatetd">{{ data }}</td>
+            {% elif forloop.counter == 7 %}
+              <td class = "gracepilotdatetd">{{ data }}</td>
+            {% elif forloop.counter == 8 %}
+              <td class = "gracepilotdatetd">{{ data }}</td>
+            {% elif forloop.counter == 9 %}
+              <td class = "gracepilotdatetd">{{ data }}</td>
+            {% elif forloop.counter == 15 %}
+              <td class = "gracepilotdatetd">{{ data }}</td>
+            {% else %}
+              {% if forloop.counter != 16 %}
                 <td>{{ data }}</td>
               {% endif %}
-            {% endfor %}
-          </tr>
-        {% endif %}
+            {% endif %}
+          {% endfor %}
+        </tr>
+
       {% endfor %}
     </tbody>
   </table>
@@ -56,13 +72,20 @@
   <table class = "table table-bordered table-striped table-hover table-sm table-dark p-0">
     <thead>
       <tr class = "tableheader">
-        {% for data in values.0 %}
-          {% if forloop.counter != 1 %}
-            {% if forloop.counter != 3 %}
-              <td>{{ data }}</td>
-            {% endif %}
-          {% endif %}
-        {% endfor %}
+        <td>Aircraft</td>
+        <td>Tach Time</td>
+        <td>Date of Last Flight</td>
+        <td>Records Review Due</td>
+        <td>Annual Due</td>
+        <td>50 Hour Due</td>
+        <td>100 Hour Due</td>
+        <td>Transponder Due</td>
+        <td>Phase 1</td>
+        <td>Phase 2</td>
+        <td>Phase 3</td>
+        <td>Phase 4</td>
+        <td>Aircraft Status</td>
+        <td>Unresolved Discrepancies</td>
       </tr>
     </thead>
     <tbody>
@@ -120,8 +143,7 @@
           </tr>
         {% elif row.1 != '4BH' and row.1 != '2DW' and row.1 != '93N' and row.1 != ''%}
         <!-- These are my NOT phase planes -->
-          {% if forloop.counter != 1 %}
-            <tr>
+          <tr>
             {% for data in row %}
               {% if forloop.counter == 1 %}
                 {% if data == "Green" %}
@@ -154,8 +176,8 @@
                 {% endif %}
               {% endif %}
             {% endfor %}
-            </tr>
-          {% endif %}
+          </tr>
+
         {% endif %}
     {% endfor %}
     </tbody>
@@ -171,9 +193,10 @@
         <td class = "align-text-top">Out of Service/Overdue</td>
         <td style = "background-color: green"></td>
         <td class = "align-text-top pt-0 mt-0">Airplane is in service</td>
+        <td class = "align-text-top pt-0 mt-0">{{ e }}</td>
       </tr>
     </tbody>
   </table>
 </div>
-{{ e }}
+
 {% endblock %}
